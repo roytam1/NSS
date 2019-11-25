@@ -1249,7 +1249,7 @@ sftk_DeleteObject(SFTKSession *session, SFTKObject *object)
         SFTKTokenObject *to = sftk_narrowToTokenObject(object);
         PORT_Assert(to);
 #endif
-        crv = sftkdb_DestroyObject(handle, object->handle);
+        crv = sftkdb_DestroyObject(handle, object->handle, object->objclass);
         sftk_freeDB(handle);
     }
     return crv;
