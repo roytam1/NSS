@@ -34,6 +34,8 @@
         'pk11_pbkdf2_unittest.cc',
         'pk11_prf_unittest.cc',
         'pk11_prng_unittest.cc',
+        'pk11_rsaencrypt_unittest.cc',
+        'pk11_rsaoaep_unittest.cc',
         'pk11_rsapkcs1_unittest.cc',
         'pk11_rsapss_unittest.cc',
         'pk11_seed_cbc_unittest.cc',
