@@ -123,7 +123,6 @@ CSRCS = \
 	cmac.c \
 	alghmac.c \
 	rawhash.c \
-	alg2268.c \
 	arcfour.c \
 	arcfive.c \
 	crypto_primitives.c \
@@ -159,6 +158,14 @@ CSRCS = \
 	$(LOWHASH_SRCS) \
 	$(EXTRA_SRCS) \
 	$(NULL)
+
+ifndef NSS_DISABLE_DEPRECATED_SEED
+	CSRCS += seed.c
+endif
+
+ifndef NSS_DISABLE_DEPRECATED_RC2
+	CSRCS += alg2268.c
+endif
 
 ALL_CSRCS := $(CSRCS)
 
