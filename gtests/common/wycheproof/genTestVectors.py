@@ -158,10 +158,31 @@ class ECDH():
 
         return result
 
+class DSA():
+    pub_keys = {}
+    def format_testcase(self, testcase, key, hash_oid, keySize, out_defs):
+        key_name = "kPubKey"
+        if key in self.pub_keys:
+            key_name = self.pub_keys[key]
+        else:
+            key_name += str(len(self.pub_keys))
+            self.pub_keys[key] = key_name
+            out_defs.append('static const std::vector<uint8_t> ' + key_name + string_to_hex_array(key) + ';\n\n')
+        result = '\n// Comment: {}'.format(testcase['comment'])
+        result += '\n// tcID: {}\n'.format(testcase['tcId'])
+        result += '{{{}, {},\n'.format(hash_oid, testcase['tcId'])
+        result += '{},\n'.format(string_to_hex_array(testcase['sig']))
+        result += '{},\n'.format(key_name)
+        result += '{},\n'.format(string_to_hex_array(testcase['msg']))
+        valid = testcase['result'] == 'valid' or (testcase['result'] == 'acceptable' and 'NoLeadingZero' in testcase['flags'])
+        result += '{}}},\n'.format(str(valid).lower())
+
+        return result
+
 class ECDSA():
     """Class that provides the generator function for a single ECDSA test case."""
-    
-    def format_testcase(self, testcase, key, hash_oid, keySize):
+
+    def format_testcase(self, testcase, key, hash_oid, keySize, out_defs):
         result = '\n// Comment: {}'.format(testcase['comment'])
         result += '\n// tcID: {}\n'.format(testcase['tcId'])
         result += '{{{}, {},\n'.format(hash_oid, testcase['tcId'])
@@ -340,7 +361,7 @@ def generate_vectors_file(params):
             if 'key' in group:
                 if 'curve' in group['key'] and group['key']['curve'] not in ['secp256r1', 'secp384r1', 'secp521r1']:
                     continue
-                vectors_file += params['formatter'].format_testcase(test, group['keyDer'], getSha(group['sha']), group['key']['keySize'])
+                vectors_file += params['formatter'].format_testcase(test, group['keyDer'], getSha(group['sha']), group['key']['keySize'], shared_defs)
             elif 'type' in group and group['type'] == 'RsassaPssVerify':
                 sLen = group['sLen'] if 'sLen' in group else 0
                 vectors_file += params['formatter'].format_testcase(test, group['keyDer'], getSha(group['sha']), getMgfSha(group['mgfSha']), sLen, shared_defs)
