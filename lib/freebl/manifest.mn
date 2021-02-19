@@ -159,10 +159,6 @@ CSRCS = \
 	$(EXTRA_SRCS) \
 	$(NULL)
 
-ifndef NSS_DISABLE_DEPRECATED_SEED
-	CSRCS += seed.c
-endif
-
 ifndef NSS_DISABLE_DEPRECATED_RC2
 	CSRCS += alg2268.c
 endif
