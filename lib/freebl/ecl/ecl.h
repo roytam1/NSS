@@ -13,12 +13,6 @@
 #include "mpi.h"
 #include "eclt.h"
 
-#ifdef _MSC_VER
-#if _MSC_VER < 1900
-#define inline 
-#endif
-#endif
-
 struct ECGroupStr;
 typedef struct ECGroupStr ECGroup;
 

@@ -10,6 +10,12 @@
 #ifndef _H_MPI_
 #define _H_MPI_
 
+#ifdef _MSC_VER
+#if _MSC_VER < 1900
+#define inline 
+#endif
+#endif
+
 #include "mpi-config.h"
 
 #include "seccomon.h"

@@ -28,6 +28,12 @@
 #include "secitem.h"
 #include "sftkdbt.h"
 
+#ifdef _MSC_VER
+#if _MSC_VER < 1900
+#define inline 
+#endif
+#endif
+
 #define STATIC_CMD_SIZE 2048
 
 typedef struct SDBFindStr SDBFind;
