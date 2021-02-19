@@ -9,6 +9,12 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#ifdef _MSC_VER
+#if _MSC_VER < 1900
+#define inline 
+#endif
+#endif
+
 /* Types which are either abstract, meaning that have to be implemented in C, or
  * which are models, meaning that they are swapped out at compile-time for
  * hand-written C types (in which case they're marked as noextract). */
