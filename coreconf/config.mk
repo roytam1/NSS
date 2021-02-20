@@ -137,12 +137,6 @@ include $(CORE_DEPTH)/coreconf/ruleset.mk
 endif
 
 #######################################################################
-# [15.0] Dependencies.
-#######################################################################
-
--include $(MKDEPENDENCIES)
-
-#######################################################################
 # Master "Core Components" macros for Hardware features               #
 #######################################################################
 ifndef NSS_DISABLE_AVX2
@@ -163,11 +157,17 @@ ifndef NSS_DISABLE_AVX2
             endif
         endif
         ifeq (1,$(NSS_DISABLE_AVX2))
-            $(warning Unable to find gcc 4.8 or greater, disabling avx2)
+            $(warning Unable to find gcc 4.8 or greater, disabling -mavx2)
             export NSS_DISABLE_AVX2
         endif
     endif
 endif #ndef NSS_DISABLE_AVX2
+
+#######################################################################
+# [15.0] Dependencies.
+#######################################################################
+
+-include $(MKDEPENDENCIES)
 
 #######################################################################
 # [16.0] Global environ ment defines
